@@ -6,13 +6,21 @@ const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_H
 const PROXY_CONFIG = [
   {
     context: [
-      "/weatherforecast",
-   ],
-    target: target,
-    secure: false,
+      "/api/login",
+      "/api/oauth/callback",
+      "/api/oauth/refreshtoken",
+      "/api/oauth/revoketoken",
+      "/api/calendarevent/eventcreate",
+      "/api/calendarevent/hasaccesstoken",
+    ],
     headers: {
-      Connection: 'Keep-Alive'
-    }
+      Connection: 'Keep-Alive',
+      /*'Access-Control-Allow-Origin': 'http://localhost:44416', // allow requests from any origin
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', // specify allowed methods
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization', // specify allowed headers*/
+    },
+    secure: false,
+    target: target
   }
 ]
 

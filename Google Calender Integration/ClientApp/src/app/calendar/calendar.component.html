@@ -1,4 +1,21 @@
-<form method="post">
-  <label>Name</label>
-  <input>
-</form>
+<div class="calendar">
+  <h2>Create Event</h2>
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" autocomplete="off">
+    <label>Title</label>
+    <input type="text" formControlName="title" autocomplete="off">
+
+    <label>Description</label>
+    <textarea formControlName="description" autocomplete="off"></textarea>
+
+    <label>Start Date and Time</label>
+    <input type="datetime-local" formControlName="start" autocomplete="off">
+
+    <label>End Date and Time</label>
+    <input type="datetime-local" formControlName="end" autocomplete="off">
+
+    <label>Location</label>
+    <input type="text" formControlName="location" autocomplete="off">
+
+    <button type="submit">Create Event</button>
+  </form>
+</div>

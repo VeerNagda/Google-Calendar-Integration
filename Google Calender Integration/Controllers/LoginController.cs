@@ -5,20 +5,21 @@ namespace Google_Calender_Integration.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class HomeController : Controller
+
+
+public class LoginController : Controller
 {
     [HttpGet]
     public ActionResult OauthRedirect()
     {
         //File location for the the json
-        var appDirectory = System.AppDomain.CurrentDomain.BaseDirectory;
-        var credentialsFile = appDirectory + "Google Calender Integration/Controllers/Files/credentials.json";
-        Console.WriteLine(credentialsFile);
+        var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
+        var credentialsFile = appDirectory + "Controllers/Files/credentials.json";
         //Reading the file
-        /*var credentials = JObject.Parse(System.IO.File.ReadAllText(credentialsFile));
+        var credentials = JObject.Parse(System.IO.File.ReadAllText(credentialsFile));
         var clientId = credentials["client_id"];
         //Same as in api console
-        const string redirectUri = "https://localhost:44450/api/oauth/callback";
+        const string redirectUri = "https://localhost:44416/api/oauth/callback";
         //Creating a URL for initial api call to get code
         var redirectUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
                           "scope=https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.events&" +
@@ -28,8 +29,7 @@ public class HomeController : Controller
                           // ReSharper disable once StringLiteralTypo
                           "state=hellothere&" +
                           "redirect_uri="+ redirectUri +"&" +
-                          "client_id=" + clientId;*/
-
-        return Redirect("https://locahost:3000");
+                          "client_id=" + clientId;
+        return Redirect(redirectUrl);
     }
 }
