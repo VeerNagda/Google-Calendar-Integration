@@ -10,3 +10,7 @@ Before making any event visit following URL "https://localhost:44416/api/login".
 Additional Information:
 In order to revoke the account privileges visite URL "https://localhost:44416/api/oauth/revoketoken".
 Tokens refresh when making a new event and a tolen lasts 1 hour.
+
+
+Problems:
+This code is facing Cors error.
