@@ -1,4 +1,4 @@
-const { env } = require('process');
+const {env} = require('process');
 
 const target = env.ASPNETCORE_HTTPS_PORT ? `https://localhost:${env.ASPNETCORE_HTTPS_PORT}` :
   env.ASPNETCORE_URLS ? env.ASPNETCORE_URLS.split(';')[0] : 'http://localhost:28547';
@@ -12,6 +12,7 @@ const PROXY_CONFIG = [
       "/api/oauth/revoketoken",
       "/api/calendarevent/eventcreate",
       "/api/calendarevent/hasaccesstoken",
+      "/api/calendarevent/recurringevent"
     ],
     headers: {
       Connection: 'Keep-Alive',

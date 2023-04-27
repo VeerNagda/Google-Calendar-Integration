@@ -1,21 +1,35 @@
 <div class="calendar">
   <h2>Create Event</h2>
-  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()" autocomplete="off">
+  <form (ngSubmit)="onSubmit()" [formGroup]="eventForm" autocomplete="off">
     <label>Title</label>
-    <input type="text" formControlName="title" autocomplete="off">
+    <input autocomplete="off" formControlName="title" type="text">
 
     <label>Description</label>
-    <textarea formControlName="description" autocomplete="off"></textarea>
+    <textarea autocomplete="off" formControlName="description"></textarea>
 
     <label>Start Date and Time</label>
-    <input type="datetime-local" formControlName="start" autocomplete="off">
+    <input autocomplete="off" formControlName="start" type="datetime-local">
 
     <label>End Date and Time</label>
-    <input type="datetime-local" formControlName="end" autocomplete="off">
+    <input autocomplete="off" formControlName="end" type="datetime-local">
 
     <label>Location</label>
-    <input type="text" formControlName="location" autocomplete="off">
+    <input autocomplete="off" formControlName="location" type="text">
 
+    <div class="checkbox-group">
+      <label>
+        <input type="checkbox" formControlName="recurring">Recurring
+      </label>
+
+      <div *ngIf="eventForm.get('recurring')?.value">
+        <label style="display: inline-block; margin-right: 1rem;"><input type="radio" formControlName="recurringOption" value="daily">Daily</label>
+        <label style="display: inline-block; margin-right: 1rem;"><input type="radio" formControlName="recurringOption" value="weekly">Weekly</label>
+        <label style="display: inline-block; margin-right: 1rem;"><input type="radio" formControlName="recurringOption" value="monthly">Monthly</label>
+        <label style="display: inline-block;"><input type="radio" formControlName="recurringOption" value="yearly">Yearly</label>
+        <label>Until</label>
+        <input type="datetime-local" name="until" formControlName="until">
+      </div>
+    </div>
     <button type="submit">Create Event</button>
   </form>
 </div>

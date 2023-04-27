@@ -38,3 +38,12 @@ button[type="submit"] {
 button[type="submit"]:hover {
   background-color: #3e8e41;
 }
+
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+label.checkbox {
+  display: flex;
+  align-items: center;
+}
