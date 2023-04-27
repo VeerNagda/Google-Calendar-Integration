@@ -231,4 +231,4 @@ _Pvt_Extensions
 .fake/
 
 #Files
-/Controllers/Files
+/Controllers/Files/credentials.json
