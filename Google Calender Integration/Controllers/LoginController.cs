@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
+
 namespace Google_Calender_Integration.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-
-
 public class LoginController : Controller
 {
-    [HttpGet]
+
+    [System.Web.Http.HttpGet]
     public ActionResult OauthRedirect()
     {
         //File location for the the json
@@ -28,7 +28,7 @@ public class LoginController : Controller
                           "response_type=code&" +
                           // ReSharper disable once StringLiteralTypo
                           "state=hellothere&" +
-                          "redirect_uri="+ redirectUri +"&" +
+                          "redirect_uri=" + redirectUri + "&" +
                           "client_id=" + clientId;
         return Redirect(redirectUrl);
     }

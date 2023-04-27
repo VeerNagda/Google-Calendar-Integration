@@ -12,22 +12,22 @@ public class OAuthController : Controller
     //sub url of controller
     [HttpGet("callback")]
     public void Callback(string code, string state, string? error = null)
-    {   
+    {
         //checks of error and in, if none, calls the function
         if (string.IsNullOrWhiteSpace(error)) GetTokens(code);
     }
 
     public void GetTokens(string code)
-    {   
+    {
         //loading files
         var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
         var tokenFile = appDirectory + "Controllers/Files/tokens.json";
-        var credentialsFile =appDirectory + "Controllers/Files/credentials.json";
+        var credentialsFile = appDirectory + "Controllers/Files/credentials.json";
         var credentials = JObject.Parse(System.IO.File.ReadAllText(credentialsFile));
 
         var restClient = new RestClient();
         var request = new RestRequest();
-        
+
         //creating a url for getting token 
         request.AddQueryParameter("client_id", credentials["client_id"]?.ToString() ?? string.Empty);
         request.AddQueryParameter("client_secret", credentials["client_secret"]?.ToString() ?? string.Empty);
@@ -41,13 +41,12 @@ public class OAuthController : Controller
         {
             //saving token in the file
             System.IO.File.WriteAllText(tokenFile, response.Content);
-            Response.Redirect("https://localhost:44416/");
+            Response.Redirect("https://localhost:44416/calendar");
         }
         else
         {
-            Response.Redirect("https://localhost:44416/calendar");
+            Response.Redirect("https://localhost:44416/");
         }
-        
     }
 
     // ReSharper disable once StringLiteralTypo
@@ -56,7 +55,7 @@ public class OAuthController : Controller
     {
         var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
         var tokenFile = appDirectory + "Controllers/Files/tokens.json";
-        var credentialsFile =appDirectory + "Controllers/Files/credentials.json";
+        var credentialsFile = appDirectory + "Controllers/Files/credentials.json";
         var credentials = JObject.Parse(System.IO.File.ReadAllText(credentialsFile));
         var tokens = JObject.Parse(System.IO.File.ReadAllText(tokenFile));
 
@@ -80,7 +79,6 @@ public class OAuthController : Controller
         {
             Response.Redirect(" https://localhost:44416/api/login");
         }
-
     }
 
     // ReSharper disable once StringLiteralTypo
@@ -99,11 +97,7 @@ public class OAuthController : Controller
 
         restClient.BaseUrl = new Uri("https://oauth2.googleapis.com/revoke");
         var response = restClient.Post(request);
-        Console.WriteLine(response.StatusCode); 
-        if (response.StatusCode == HttpStatusCode.OK)
-        {
-            Response.Redirect("https://localhost:44416/");
-        }
-
+        Console.WriteLine(response.StatusCode);
+        if (response.StatusCode == HttpStatusCode.OK) Response.Redirect("https://localhost:44416/");
     }
 }
