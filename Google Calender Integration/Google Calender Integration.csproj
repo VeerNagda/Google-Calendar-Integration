@@ -14,8 +14,9 @@
     <ItemGroup>
         <PackageReference Include="Google.Apis.Calendar.v3" Version="1.60.0.3017" />
         <PackageReference Include="Google.Apis.Oauth2.v2" Version="1.60.0.1869" />
-        <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.3.0-preview1" />
-        <PackageReference Include="Microsoft.AspNet.WebApi.Cors" Version="5.3.0-preview1" />
+        <PackageReference Include="Google.Apis.Tasks.v1" Version="1.60.0.3015" />
+        <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="6.0.0-preview.4.21253.5" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.TagHelpers" Version="2.2.0" />
         <PackageReference Include="Microsoft.AspNetCore.SpaProxy" Version="7.0.5" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
         <PackageReference Include="RestSharp" Version="106.15.0" />

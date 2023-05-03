@@ -1,0 +1,15 @@
+<div class="task">
+  <h2>Create Task</h2>
+  <form (ngSubmit)="onSubmit()" [formGroup]="eventForm" autocomplete="off">
+    <label>Title</label>
+    <input autocomplete="off" formControlName="title" type="text">
+
+    <label>Notes</label>
+    <textarea autocomplete="off" formControlName="notes"></textarea>
+
+    <label>Due</label>
+    <input autocomplete="off" formControlName="due" type="date">
+
+    <button type="submit">Create Event</button>
+  </form>
+</div>

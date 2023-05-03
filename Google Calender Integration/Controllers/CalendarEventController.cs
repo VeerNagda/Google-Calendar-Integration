@@ -1,5 +1,6 @@
 using System.Net;
 using Google;
+using Google_Calender_Integration.Models;
 using Google.Apis.Auth.OAuth2;
 using Google.Apis.Calendar.v3;
 using Google.Apis.Calendar.v3.Data;
@@ -107,7 +108,7 @@ public class CalendarEventController : Controller
         catch (GoogleApiException ex)
         {
             if (ex.HttpStatusCode != HttpStatusCode.Unauthorized)
-                return Json(new { success = false, message = "Error creating event"  + (ex.HttpStatusCode)});
+                return Json(new { success = false, message = "Error creating event" + ex.HttpStatusCode });
             new OAuthController().RefreshToken();
             var request = service.Events.Insert(myEvent, calendarId);
             request.Execute();
@@ -126,12 +127,12 @@ public class CalendarEventController : Controller
             HttpClientInitializer = credential,
             ApplicationName = "My Calendar App"
         });
-        
+
         //converting the recurse until date time to utc and format that api accepts
         var dateTime = eventData.Until.ToUniversalTime();
         // ReSharper disable once StringLiteralTypo
         var dateTimeString = dateTime.ToString("yyyyMMddTHHmmssZ");
-        
+
         //Creating a request to api call
         var myEvent = new Event
         {
@@ -147,12 +148,12 @@ public class CalendarEventController : Controller
             {
                 DateTime = eventData.End,
                 TimeZone = eventData.TimeZone
-            },    
+            },
             Recurrence = new List<string>
             {
                 //Compulsory Uppercase needed
-                "RRULE:FREQ="+eventData.RecurringOption?.ToUpper()+";" +
-                "UNTIL="+dateTimeString+";"
+                "RRULE:FREQ=" + eventData.RecurringOption?.ToUpper() + ";" +
+                "UNTIL=" + dateTimeString + ";"
             },
             Reminders = new Event.RemindersData
             {
@@ -168,14 +169,14 @@ public class CalendarEventController : Controller
         catch (GoogleApiException ex)
         {
             if (ex.HttpStatusCode != HttpStatusCode.Unauthorized)
-                return Json(new { success = false, message = "Error creating recurring event" + ex.HttpStatusCode});
-            
+                return Json(new { success = false, message = "Error creating recurring event"});
+
             //in case of HttpStatusCode.Unauthorized it will refresh the token and retry
             new OAuthController().RefreshToken();
             var request = service.Events.Insert(myEvent, calendarId);
             request.Execute();
-            return Json(new { success = true, message = "Recurring event created successfully after refreshing token" });
-
+            return Json(new
+                { success = true, message = "Recurring event created successfully after refreshing token" });
         }
     }
 }

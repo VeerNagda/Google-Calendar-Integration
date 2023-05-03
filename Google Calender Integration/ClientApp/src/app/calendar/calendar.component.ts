@@ -45,9 +45,9 @@ export class CalendarComponent implements OnInit {
     this.http.get("https://localhost:44416/api/calendarevent/hasaccesstoken").pipe(
       switchMap(result => {
         if (result) {
-          if(!eventData.recurring){
+          if (!eventData.recurring) {
             return this.http.post('https://localhost:44416/api/calendarevent/eventcreate', this.eventForm.value);
-          }else {
+          } else {
             return this.http.post('https://localhost:44416/api/calendarevent/recurringevent', this.eventForm.value);
           }
         } else {

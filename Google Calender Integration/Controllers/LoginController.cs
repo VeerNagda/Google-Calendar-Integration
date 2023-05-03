@@ -1,15 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 
-
 namespace Google_Calender_Integration.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class LoginController : Controller
 {
-
-    [System.Web.Http.HttpGet]
+    [HttpGet]
     public ActionResult OauthRedirect()
     {
         //File location for the the json
@@ -22,7 +20,9 @@ public class LoginController : Controller
         const string redirectUri = "https://localhost:44416/api/oauth/callback";
         //Creating a URL for initial api call to get code
         var redirectUrl = "https://accounts.google.com/o/oauth2/v2/auth?" +
-                          "scope=https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.events&" +
+                          //Scope must have all the apis one is asking for
+                          "scope=https://www.googleapis.com/auth/calendar+https://www.googleapis.com/auth/calendar.events"+
+                          "+https://www.googleapis.com/auth/tasks+https://www.googleapis.com/auth/tasks.readonly&" +
                           "access_type=offline&" +
                           "include_granted_scopes=true&" +
                           "response_type=code&" +

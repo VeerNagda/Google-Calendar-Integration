@@ -18,16 +18,19 @@
 
     <div class="checkbox-group">
       <label>
-        <input type="checkbox" formControlName="recurring">Recurring
+        <input formControlName="recurring" type="checkbox">Recurring
       </label>
 
       <div *ngIf="eventForm.get('recurring')?.value">
-        <label style="display: inline-block; margin-right: 1rem;"><input type="radio" formControlName="recurringOption" value="daily">Daily</label>
-        <label style="display: inline-block; margin-right: 1rem;"><input type="radio" formControlName="recurringOption" value="weekly">Weekly</label>
-        <label style="display: inline-block; margin-right: 1rem;"><input type="radio" formControlName="recurringOption" value="monthly">Monthly</label>
-        <label style="display: inline-block;"><input type="radio" formControlName="recurringOption" value="yearly">Yearly</label>
+        <label style="display: inline-block; margin-right: 1rem;"><input formControlName="recurringOption" type="radio"
+                                                                         value="daily">Daily</label>
+        <label style="display: inline-block; margin-right: 1rem;"><input formControlName="recurringOption" type="radio"
+                                                                         value="weekly">Weekly</label>
+        <label style="display: inline-block; margin-right: 1rem;"><input formControlName="recurringOption" type="radio"
+                                                                         value="monthly">Monthly</label>
+        <label style="display: inline-block;"><input formControlName="recurringOption" type="radio" value="yearly">Yearly</label>
         <label>Until</label>
-        <input type="datetime-local" name="until" formControlName="until">
+        <input formControlName="until" name="until" type="datetime-local">
       </div>
     </div>
     <button type="submit">Create Event</button>

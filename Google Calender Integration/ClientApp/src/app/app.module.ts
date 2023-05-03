@@ -9,6 +9,7 @@ import {NavMenuComponent} from './nav-menu/nav-menu.component';
 import {HomeComponent} from './home/home.component';
 import {CalendarComponent} from "./calendar/calendar.component";
 import {DatePipe} from "@angular/common";
+import { TaskComponent } from './task/task.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import {DatePipe} from "@angular/common";
     NavMenuComponent,
     HomeComponent,
     CalendarComponent,
+    TaskComponent,
   ],
   imports: [
     BrowserModule.withServerTransition({appId: 'ng-cli-universal'}),
@@ -23,7 +25,8 @@ import {DatePipe} from "@angular/common";
     FormsModule,
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
-      {path: 'calendar', component: CalendarComponent}
+      {path: 'calendar', component: CalendarComponent},
+      {path: 'task', component: TaskComponent}
     ]),
     ReactiveFormsModule
   ],

@@ -36,7 +36,6 @@ public class OAuthController : Controller
         request.AddQueryParameter("redirect_uri", "https://localhost:44416/api/oauth/callback");
         restClient.BaseUrl = new Uri("https://oauth2.googleapis.com/token");
         var response = restClient.Post(request);
-        Console.WriteLine(response.StatusCode);
         if (response.StatusCode == HttpStatusCode.OK)
         {
             //saving token in the file
@@ -85,7 +84,6 @@ public class OAuthController : Controller
     [HttpGet("revoketoken")]
     public void RevokeToken()
     {
-        Console.WriteLine("RevokeToken entered");
         var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
         var tokenFile = appDirectory + "Controllers/Files/tokens.json";
         var tokens = JObject.Parse(System.IO.File.ReadAllText(tokenFile));
@@ -97,7 +95,6 @@ public class OAuthController : Controller
 
         restClient.BaseUrl = new Uri("https://oauth2.googleapis.com/revoke");
         var response = restClient.Post(request);
-        Console.WriteLine(response.StatusCode);
         if (response.StatusCode == HttpStatusCode.OK) Response.Redirect("https://localhost:44416/");
     }
 }

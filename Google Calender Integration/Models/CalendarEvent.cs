@@ -1,6 +1,6 @@
-namespace Google_Calender_Integration;
+namespace Google_Calender_Integration.Models;
 
-public class RecurringEvent
+public class CalendarEvent
 {
     public string? Title { get; set; }
 
@@ -13,8 +13,4 @@ public class RecurringEvent
     public string? Location { get; set; }
 
     public string? TimeZone { get; set; }
-    
-    public string? RecurringOption { get; set; }
-    
-    public DateTime Until { get; set; }
 }

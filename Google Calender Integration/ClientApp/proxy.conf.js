@@ -12,7 +12,10 @@ const PROXY_CONFIG = [
       "/api/oauth/revoketoken",
       "/api/calendarevent/eventcreate",
       "/api/calendarevent/hasaccesstoken",
-      "/api/calendarevent/recurringevent"
+      "/api/calendarevent/recurringevent",
+      "/api/task/hasaccesstoken",
+      "/api/task/createtask",
+
     ],
     headers: {
       Connection: 'Keep-Alive',
