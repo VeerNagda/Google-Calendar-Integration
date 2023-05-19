@@ -10,6 +10,7 @@ namespace Google_Calender_Integration.Controllers;
 public class OAuthController : Controller
 {
     //sub url of controller
+
     [HttpGet("callback")]
     public void Callback(string code, string state, string? error = null)
     {
@@ -17,7 +18,7 @@ public class OAuthController : Controller
         if (string.IsNullOrWhiteSpace(error)) GetTokens(code);
     }
 
-    public void GetTokens(string code)
+    private void GetTokens(string code)
     {
         //loading files
         var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
@@ -48,6 +49,7 @@ public class OAuthController : Controller
         }
     }
 
+    // Refresh the token
     // ReSharper disable once StringLiteralTypo
     [HttpGet("refreshtoken")]
     public void RefreshToken()
@@ -80,7 +82,8 @@ public class OAuthController : Controller
         }
     }
 
-    // ReSharper disable once StringLiteralTypo
+    // In case functionality for need to revoke the token
+    // ReSharper disable once StringLiteralTypo// ReSharper disable once StringLiteralTypo
     [HttpGet("revoketoken")]
     public void RevokeToken()
     {
@@ -97,4 +100,7 @@ public class OAuthController : Controller
         var response = restClient.Post(request);
         if (response.StatusCode == HttpStatusCode.OK) Response.Redirect("https://localhost:44416/");
     }
+
+
+    
 }

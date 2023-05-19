@@ -18,19 +18,32 @@ public class CalendarEventController : Controller
     private static string? _accessToken;
     private static string? _calendarId;
 
+    private readonly MessageModel _messageModel = new();
     //Function to set value of _accessToken
     // ReSharper disable once StringLiteralTypo
     [HttpGet("hasaccesstoken")]
-    public bool HasAccessToken()
+    public MessageModel HasAccessToken()
     {
         var appDirectory = AppDomain.CurrentDomain.BaseDirectory;
         var tokenFile = appDirectory + "Controllers/Files/tokens.json";
-        if (!System.IO.File.Exists(tokenFile)) return false;
+        if (!System.IO.File.Exists(tokenFile))
+        {
+            _messageModel.Status = "Failed";
+            _messageModel.Message = "Token File Does not not exist";
+            return _messageModel;
+        }
         var tokenJson = System.IO.File.ReadAllText(tokenFile);
         var token = JsonConvert.DeserializeObject<JObject>(tokenJson);
-        if (string.IsNullOrWhiteSpace(token?.GetValue("access_token")?.ToString())) return false;
+        if (string.IsNullOrWhiteSpace(token?.GetValue("access_token")?.ToString()))
+        {
+            _messageModel.Status = "Failed";
+            _messageModel.Message = "Token Not Available";
+            return _messageModel;
+        }
         AccessTokenSetter();
-        return true;
+        _messageModel.Status = "Success";
+        _messageModel.Message = "Token Available";
+        return _messageModel;
     }
 
     private static void AccessTokenSetter()
@@ -44,7 +57,7 @@ public class CalendarEventController : Controller
         SetPrimaryCalendarId();
     }
 
-    private static void SetPrimaryCalendarId()
+    private static void SetPrimaryCalendarId() // This method can be used to get any calendar id primary or any other by changing below "primary" with variable
     {
         while (true)
         {
@@ -71,7 +84,7 @@ public class CalendarEventController : Controller
 
     // ReSharper disable once StringLiteralTypo
     [HttpPost("eventcreate")]
-    public IActionResult EventCreate([FromBody] CalendarEvent eventData)
+    public MessageModel EventCreate([FromBody] CalendarEvent eventData)
     {
         var calendarId = _calendarId;
         var credential = GoogleCredential.FromAccessToken(_accessToken);
@@ -103,22 +116,30 @@ public class CalendarEventController : Controller
         try
         {
             service.Events.Insert(myEvent, calendarId).Execute();
-            return Json(new { success = true, message = "Event created successfully" });
+            _messageModel.Status = "Success";
+            _messageModel.Message = "Event created successfully";
+            return _messageModel;
         }
         catch (GoogleApiException ex)
         {
             if (ex.HttpStatusCode != HttpStatusCode.Unauthorized)
-                return Json(new { success = false, message = "Error creating event" + ex.HttpStatusCode });
+            {
+                _messageModel.Status = "Failed";
+                _messageModel.Message = "Error creating event";
+                return _messageModel;
+            }
             new OAuthController().RefreshToken();
             var request = service.Events.Insert(myEvent, calendarId);
             request.Execute();
-            return Json(new { success = true, message = "Event created successfully after refreshing token" });
+            _messageModel.Status = "Success";
+            _messageModel.Message = "Event created successfully after refreshing token";
+            return _messageModel;
         }
     }
 
     // ReSharper disable once StringLiteralTypo
     [HttpPost("recurringevent")]
-    public IActionResult RecurringEvent([FromBody] RecurringEvent eventData)
+    public MessageModel RecurringEvent([FromBody] RecurringEvent eventData)
     {
         var calendarId = _calendarId;
         var credential = GoogleCredential.FromAccessToken(_accessToken);
@@ -164,19 +185,25 @@ public class CalendarEventController : Controller
         {
             //sending a call
             service.Events.Insert(myEvent, calendarId).Execute();
-            return Json(new { success = true, message = "Recurring event created successfully" });
+            _messageModel.Status = "Success";
+            _messageModel.Message = "Event created successfully";
+            return _messageModel;
         }
         catch (GoogleApiException ex)
         {
             if (ex.HttpStatusCode != HttpStatusCode.Unauthorized)
-                return Json(new { success = false, message = "Error creating recurring event"});
-
+            {
+                _messageModel.Status = "Failed";
+                _messageModel.Message = "Error creating recurring event";
+                return _messageModel;
+            }
             //in case of HttpStatusCode.Unauthorized it will refresh the token and retry
             new OAuthController().RefreshToken();
             var request = service.Events.Insert(myEvent, calendarId);
             request.Execute();
-            return Json(new
-                { success = true, message = "Recurring event created successfully after refreshing token" });
+            _messageModel.Status = "Success";
+            _messageModel.Message = "Event created successfully after refreshing token";
+            return _messageModel;
         }
     }
 }

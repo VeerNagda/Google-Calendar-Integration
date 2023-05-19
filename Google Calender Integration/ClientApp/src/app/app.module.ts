@@ -26,7 +26,7 @@ import { TaskComponent } from './task/task.component';
     RouterModule.forRoot([
       {path: '', component: HomeComponent, pathMatch: 'full'},
       {path: 'calendar', component: CalendarComponent},
-      {path: 'task', component: TaskComponent}
+      {path: 'task', component: TaskComponent},
     ]),
     ReactiveFormsModule
   ],

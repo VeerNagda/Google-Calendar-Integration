@@ -15,13 +15,11 @@ const PROXY_CONFIG = [
       "/api/calendarevent/recurringevent",
       "/api/task/hasaccesstoken",
       "/api/task/createtask",
+      "/api/task/checktask",
 
     ],
     headers: {
       Connection: 'Keep-Alive',
-      /*'Access-Control-Allow-Origin': 'http://localhost:44416', // allow requests from any origin
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS', // specify allowed methods
-      'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization', // specify allowed headers*/
     },
     secure: false,
     target: target

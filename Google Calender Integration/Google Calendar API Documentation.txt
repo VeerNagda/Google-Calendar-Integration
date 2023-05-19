@@ -1,0 +1,37 @@
+Google Calender Api
+
+Startup steps
+    1) Create a new project at 
+        https://console.cloud.google.com/projectcreate?previousPage=%2Fapis%2Fcredentials%2Fconsent%3Fproject%3Dpeppy-ridge-384306&organizationId=0
+    
+    2) Enable services for google calendar and task 
+        https://console.cloud.google.com/welcome?project=peppy-ridge-384306
+    
+    3) Setup oauth screen
+        https://console.cloud.google.com/apis/credentials/consent?project=peppy-ridge-384306
+        Ensure to add following scopes:
+            a) .../auth/calendar
+            b) .../auth/calendar.events
+            c) .../auth/tasks
+            d) .../auth/tasks.readonly
+    
+    4) Create OAuth 2.0 Client ID
+        https://console.cloud.google.com/apis/credentials?project=peppy-ridge-384306
+        Ensure to add Authorized redirect URIs
+
+
+Oauth2:
+    https://developers.google.com/identity/protocols/oauth2
+    https://developers.google.com/api-client-library/dotnet/guide/aaa_oauth
+
+Tasks:
+    Note
+        Currently the due date only records date information; the time portion of the timestamp is discarded
+        when setting the due date. It isn't possible to read or write the time that a task is due via the API.
+        https://stackoverflow.com/questions/66744979/google-tasks-doesnt-set-time-only-date
+
+
+Google not giving support to reminders:
+    https://issuetracker.google.com/issues/200967541#comment2
+    https://issuetracker.google.com/issues/36760283
+

@@ -5,15 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 const string myAllowSpecificOrigins = "_myAllowSpecificOrigins";
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy(myAllowSpecificOrigins,
-        policy =>
-        {
-            policy.WithOrigins("https://localhost:44416")
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
+builder.Services.AddCors(options => {
+    options.AddPolicy("AllowCorsPolicy", corsPolicyBuilder => {
+        // Allow all ports on local host.
+        corsPolicyBuilder.SetIsOriginAllowed(origin => new Uri(origin).Host == "localhost");
+        corsPolicyBuilder.AllowAnyHeader();
+        corsPolicyBuilder.AllowAnyMethod();
+    });
 });
 
 var app = builder.Build();
@@ -26,12 +24,11 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
-
+app.UseCors("AllowCorsPolicy");
 
 app.MapControllerRoute(
     "default",
     "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
-app.UseCors(myAllowSpecificOrigins);
 app.Run();
